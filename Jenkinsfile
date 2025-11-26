@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/PUSHPENDRACHAUDHARI/devops-automation-project.git'
             }
@@ -35,6 +35,7 @@ pipeline {
         stage('Push Images to Docker Hub') {
             steps {
                 script {
+                    // Login using Docker Hub PAT
                     sh "echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin"
                     sh "docker push ${env.BACKEND_IMAGE}"
                     sh "docker push ${env.FRONTEND_IMAGE}"
